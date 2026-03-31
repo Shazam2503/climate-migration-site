@@ -322,28 +322,37 @@
             </g>
 
             <!-- ── Earth / Globe ── -->
-            <circle cx="158" cy="170" r="108" fill="#2a3826"/>
+            <!-- Ocean base — deep blue -->
+            <circle cx="158" cy="170" r="108" fill="#1a3f5c"/>
 
-            <!-- Continent suggestions (organic ellipses) -->
+            <!-- Ocean shading patches for depth -->
+            <ellipse cx="130" cy="185" rx="55" ry="45" fill="#1d4a6e" opacity="0.6"/>
+            <ellipse cx="190" cy="155" rx="48" ry="38" fill="#163858" opacity="0.5"/>
+
+            <!-- Continent land masses on top of ocean -->
             <!-- Africa -->
-            <ellipse cx="172" cy="165" rx="24" ry="38" fill="#3b5432" opacity="0.85"/>
+            <ellipse cx="172" cy="165" rx="24" ry="38" fill="#3b5432"/>
             <!-- Americas -->
-            <ellipse cx="122" cy="155" rx="19" ry="34" fill="#3b5432" opacity="0.65"/>
-            <!-- Eurasia blob -->
-            <ellipse cx="210" cy="142" rx="30" ry="24" fill="#3b5432" opacity="0.70"/>
-            <!-- Small island scatter -->
-            <ellipse cx="148" cy="130" rx="8" ry="5" fill="#3b5432" opacity="0.50"/>
-            <ellipse cx="198" cy="195" rx="10" ry="6" fill="#3b5432" opacity="0.45"/>
+            <ellipse cx="120" cy="155" rx="20" ry="34" fill="#3b5432"/>
+            <!-- Europe / Eurasia -->
+            <ellipse cx="212" cy="142" rx="30" ry="22" fill="#3b5432"/>
+            <!-- Antarctica hint (bottom) -->
+            <ellipse cx="158" cy="268" rx="30" ry="10" fill="#dcd8ce" opacity="0.55"/>
+            <!-- Greenland / Arctic hint (top) -->
+            <ellipse cx="150" cy="80"  rx="18" ry="9"  fill="#dcd8ce" opacity="0.45"/>
+            <!-- Small islands -->
+            <ellipse cx="148" cy="132" rx="8"  ry="5"  fill="#3b5432" opacity="0.70"/>
+            <ellipse cx="198" cy="196" rx="10" ry="6"  fill="#3b5432" opacity="0.65"/>
 
-            <!-- Globe highlight (subtle) -->
-            <ellipse cx="130" cy="130" rx="30" ry="20" fill="#ffffff" opacity="0.04"/>
+            <!-- Globe specular highlight -->
+            <ellipse cx="128" cy="128" rx="32" ry="22" fill="#ffffff" opacity="0.06"/>
 
             <!-- ── Melting drips ── -->
-            <ellipse class="tk-drip tk-drip-1" cx="133" cy="283" rx="9"  ry="16" fill="#2a3826"/>
-            <ellipse class="tk-drip tk-drip-2" cx="153" cy="289" rx="11" ry="19" fill="#2a3826"/>
-            <ellipse class="tk-drip tk-drip-3" cx="175" cy="291" rx="10" ry="20" fill="#2a3826"/>
-            <ellipse class="tk-drip tk-drip-4" cx="196" cy="286" rx="8"  ry="15" fill="#2a3826"/>
-            <ellipse                            cx="213" cy="280" rx="6"  ry="11" fill="#2a3826"/>
+            <ellipse class="tk-drip tk-drip-1" cx="133" cy="283" rx="9"  ry="16" fill="#1a3f5c"/>
+            <ellipse class="tk-drip tk-drip-2" cx="153" cy="289" rx="11" ry="19" fill="#1a3f5c"/>
+            <ellipse class="tk-drip tk-drip-3" cx="175" cy="291" rx="10" ry="20" fill="#1a3f5c"/>
+            <ellipse class="tk-drip tk-drip-4" cx="196" cy="286" rx="8"  ry="15" fill="#1a3f5c"/>
+            <ellipse                            cx="213" cy="280" rx="6"  ry="11" fill="#1a3f5c"/>
 
             <!-- ── Thermometer ── -->
             <!-- Outer tube -->

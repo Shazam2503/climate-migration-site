@@ -1573,7 +1573,7 @@ ul  { list-style: none; }
   display: flex;
   gap: var(--sp-xl);
   align-items: flex-start;
-  margin-top: var(--sp-lg);
+  margin-top: var(--sp-xl); /* increased from sp-lg to separate from Activity */
 }
 
 /* ── Left column ── */
@@ -1582,35 +1582,35 @@ ul  { list-style: none; }
   min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: var(--sp-lg);
+  gap: var(--sp-sm); /* tightened from sp-lg so card sits closer to prompts */
 }
 
 /* Reflection prompts */
 .tk-prompts {
   display: flex;
   flex-direction: column;
-  gap: var(--sp-md);
+  gap: 0.6rem; /* tightened from sp-md */
 }
 
 .tk-prompt {
   border-bottom: 1px solid var(--c-border);
-  padding-bottom: var(--sp-sm);
+  padding-bottom: 0.6rem; /* tightened from sp-sm */
 }
 
 .tk-prompt__label {
   display: block;
   font-family: var(--f-body);
-  font-size: 0.65rem;
+  font-size: 0.75rem; /* increased from 0.65rem */
   font-weight: 700;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--c-text-sec);
-  margin-bottom: var(--sp-sm);
+  margin-bottom: 0.5rem;
 }
 
-/* Breathing space below each label — generous empty area */
+/* Breathing space below each label */
 .tk-prompt__space {
-  height: 2.8rem;
+  height: 2.2rem; /* slightly reduced */
 }
 
 /* "This Is Only the Beginning" card */
