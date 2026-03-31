@@ -1561,6 +1561,115 @@ ul  { list-style: none; }
 }
 
 /* ============================================================
+   TAKEAWAYS SECTION
+   ============================================================ */
+
+.tk-section {
+  background: var(--c-bg);
+}
+
+/* Two-column layout */
+.tk-layout {
+  display: flex;
+  gap: var(--sp-xl);
+  align-items: flex-start;
+  margin-top: var(--sp-lg);
+}
+
+/* ── Left column ── */
+.tk-left {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-lg);
+}
+
+/* Reflection prompts */
+.tk-prompts {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-md);
+}
+
+.tk-prompt {
+  border-bottom: 1px solid var(--c-border);
+  padding-bottom: var(--sp-sm);
+}
+
+.tk-prompt__label {
+  display: block;
+  font-family: var(--f-body);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--c-text-sec);
+  margin-bottom: var(--sp-sm);
+}
+
+/* Breathing space below each label — generous empty area */
+.tk-prompt__space {
+  height: 2.8rem;
+}
+
+/* "This Is Only the Beginning" card */
+.tk-card {
+  border: 1.5px solid var(--c-accent);
+  border-radius: var(--radius-lg);
+  padding: var(--sp-md) calc(var(--sp-md) * 1.2);
+  background: rgba(47,93,80,0.04);
+}
+
+.tk-card__title {
+  font-family: var(--f-heading);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--c-accent);
+  margin-bottom: var(--sp-sm);
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+}
+
+.tk-card__text {
+  font-size: 0.9rem;
+  line-height: 1.75;
+  color: var(--c-text-sec);
+  margin-bottom: 0.5rem;
+}
+
+.tk-card__text:last-child { margin-bottom: 0; }
+
+/* ── Right column — SVG infographic ── */
+.tk-right {
+  flex: 0 0 auto;
+  width: 280px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.tk-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ── Mobile: stack vertically ── */
+@media (max-width: 767px) {
+  .tk-layout {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .tk-right {
+    width: 100%;
+    max-width: 280px;
+    margin: 0 auto;
+  }
+}
+
+/* ============================================================
    FOOTER
    ============================================================ */
 .site-footer {
