@@ -97,6 +97,195 @@ if (navToggle && navLinks) {
 }
 
 /* ============================================================
+   READING SUMMARY — SUBSECTION 1: Concept flip boxes
+   ============================================================ */
+const conceptBoxes = [
+  { title: 'Home',                  text: 'Home is not just a location. It includes identity, memory, and ways of living tied to specific environments.' },
+  { title: 'Place Attachment',      text: 'Deep relationships between people and land, built through cultural practices, livelihoods, and intergenerational knowledge.' },
+  { title: 'Solastalgia',           text: 'Distress experienced when familiar environments are altered, even if people remain physically in place.' },
+  { title: 'Environmental Justice', text: 'Climate impacts are uneven. Those least responsible often face the greatest risks and least support.' },
+  { title: 'Forced Migration',      text: 'Displacement driven by environmental change where staying is no longer possible, but leaving creates loss beyond the physical.' },
+  { title: 'Indigenous Knowledge',  text: 'Understands land as relational and interconnected, not as a resource to be owned or exploited.' },
+];
+
+const rsConceptGrid = document.getElementById('rs-concept-grid');
+if (rsConceptGrid) {
+  conceptBoxes.forEach(box => {
+    const el = document.createElement('div');
+    el.className = 'rs-concept-box';
+    el.innerHTML = `
+      <div class="rs-concept-box__inner">
+        <div class="rs-concept-box__front">
+          <p class="rs-concept-box__front-title">${box.title}</p>
+          <p class="rs-concept-box__front-hint">tap to reveal</p>
+        </div>
+        <div class="rs-concept-box__back">
+          <p class="rs-concept-box__back-text">${box.text}</p>
+        </div>
+      </div>`;
+    el.addEventListener('click', () => el.classList.toggle('flipped'));
+    rsConceptGrid.appendChild(el);
+  });
+}
+
+/* ============================================================
+   READING SUMMARY — SUBSECTION 2: Case study bullet lists
+   ============================================================ */
+const caseStudyPoints = [
+  'Coastal erosion and sea-level rise are rapidly reducing land',
+  'Approximately 90% of original land has already been lost',
+  'Increasing pressure to relocate entire communities',
+  'Relocation framed as a technical "solution" or adaptation strategy',
+  'Limited government support because relocation is not considered economically viable',
+];
+
+const impactPoints = [
+  'Land is central to food systems, including hunting and ecological knowledge',
+  'Cultural practices are tied to specific landscapes and cannot be relocated',
+  'Knowledge systems depend on relationships with animals, seasons, and place',
+  'Loss of land disrupts intergenerational knowledge transfer',
+  'Community identity is inseparable from environment',
+  'Emotional impacts include grief, anxiety, and disorientation',
+  'Solastalgia emerges as environments change but people remain',
+  'Displacement is experienced not just as movement, but as loss of meaning and belonging',
+];
+
+function renderBulletList(id, items) {
+  const ul = document.getElementById(id);
+  if (!ul) return;
+  items.forEach(item => {
+    const li = document.createElement('li');
+    li.textContent = item;
+    ul.appendChild(li);
+  });
+}
+
+renderBulletList('rs-case-list',   caseStudyPoints);
+renderBulletList('rs-impact-list', impactPoints);
+
+/* ============================================================
+   READING SUMMARY — SUBSECTION 3: Radial spoke diagram
+   ============================================================ */
+const spokeNodes = [
+  { label: 'Neoliberal Capitalism',          text: 'Prioritises profit and market solutions. Environmental harm continues because industries and global trade are economically incentivised.' },
+  { label: 'Unequal Impacts',                text: 'Wealthy countries and corporations benefit, while vulnerable communities face environmental damage and are more likely to be displaced.' },
+  { label: 'Commodification of Nature',      text: 'Land, water, and resources are treated as economic assets. This drives extraction, environmental degradation, and dispossession.' },
+  { label: 'Colonial Histories',             text: 'Many vulnerable regions were historically exploited, creating long-term inequalities that shape present climate vulnerability.' },
+  { label: 'State Restructuring',            text: 'Governments support markets and industries rather than directly protecting communities, limiting effective adaptation.' },
+  { label: 'Depoliticisation of\nClimate Change', text: 'Climate change is framed as a technical issue (carbon, data), which hides deeper political and economic causes.' },
+];
+
+const rsDiagram = document.getElementById('rs-diagram');
+const rsDiagramMobile = document.getElementById('rs-diagram-mobile');
+
+/* ── Desktop radial layout ── */
+if (rsDiagram) {
+  /* SVG spoke lines */
+  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  svg.classList.add('rs-diagram__svg');
+  rsDiagram.appendChild(svg);
+
+  /* Reveal panel */
+  const revealPanel = document.createElement('div');
+  revealPanel.className = 'rs-spoke-reveal';
+  revealPanel.innerHTML = `<div class="rs-spoke-reveal__inner">
+    <p class="rs-spoke-reveal__name" id="rs-reveal-name"></p>
+    <p class="rs-spoke-reveal__text" id="rs-reveal-text"></p>
+  </div>`;
+  rsDiagram.parentElement.appendChild(revealPanel);
+
+  const revealName = document.getElementById('rs-reveal-name');
+  const revealText = document.getElementById('rs-reveal-text');
+
+  let activeBtn = null;
+
+  spokeNodes.forEach((node, i) => {
+    const total  = spokeNodes.length;
+    /* Start at -90° (top) so first node is at 12 o'clock */
+    const angleDeg = -90 + (i / total) * 360;
+    const angleRad = (angleDeg * Math.PI) / 180;
+    /* Radius as % of container (50% = edge) — nodes sit at 78% */
+    const r  = 38;   /* % from centre */
+    const cx = 50 + r * Math.cos(angleRad);
+    const cy = 50 + r * Math.sin(angleRad);
+
+    /* Spoke line */
+    const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+    line.setAttribute('x1', '50%');
+    line.setAttribute('y1', '50%');
+    line.setAttribute('x2', `${cx}%`);
+    line.setAttribute('y2', `${cy}%`);
+    svg.appendChild(line);
+
+    /* Node button */
+    const nodeEl = document.createElement('div');
+    nodeEl.className = 'rs-spoke-node';
+    nodeEl.style.left = `${cx}%`;
+    nodeEl.style.top  = `${cy}%`;
+
+    const btn = document.createElement('button');
+    btn.className = 'rs-spoke-node__btn';
+    btn.setAttribute('aria-expanded', 'false');
+
+    const labelSpan = document.createElement('span');
+    labelSpan.className = 'rs-spoke-node__label';
+    labelSpan.textContent = node.label.replace('\n', ' ');
+    btn.appendChild(labelSpan);
+    nodeEl.appendChild(btn);
+    rsDiagram.appendChild(nodeEl);
+
+    btn.addEventListener('click', () => {
+      const isActive = btn.classList.contains('active');
+      /* Reset all */
+      rsDiagram.querySelectorAll('.rs-spoke-node__btn').forEach(b => {
+        b.classList.remove('active');
+        b.setAttribute('aria-expanded', 'false');
+      });
+      if (isActive) {
+        revealPanel.classList.remove('visible');
+        activeBtn = null;
+      } else {
+        btn.classList.add('active');
+        btn.setAttribute('aria-expanded', 'true');
+        revealName.textContent = node.label.replace('\n', ' ');
+        revealText.textContent = node.text;
+        revealPanel.classList.add('visible');
+        activeBtn = btn;
+      }
+    });
+  });
+}
+
+/* ── Mobile list fallback ── */
+if (rsDiagramMobile) {
+  spokeNodes.forEach(node => {
+    const li = document.createElement('li');
+    const btn = document.createElement('button');
+    btn.innerHTML = `<span>${node.label.replace('\n', ' ')}</span>`;
+
+    const reveal = document.createElement('div');
+    reveal.className = 'rs-diagram-mobile__reveal';
+    reveal.textContent = node.text;
+
+    btn.addEventListener('click', () => {
+      const open = btn.classList.toggle('active');
+      reveal.classList.toggle('visible', open);
+      /* Close siblings */
+      rsDiagramMobile.querySelectorAll('button').forEach(b => {
+        if (b !== btn) {
+          b.classList.remove('active');
+          b.nextElementSibling.classList.remove('visible');
+        }
+      });
+    });
+
+    li.appendChild(btn);
+    li.appendChild(reveal);
+    rsDiagramMobile.appendChild(li);
+  });
+}
+
+/* ============================================================
    CAUSE CARDS — Root causes of climate displacement
    Add/edit entries here. Fields:
      icon    — emoji or symbol

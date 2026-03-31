@@ -881,6 +881,396 @@ ul  { list-style: none; }
 }
 
 /* ============================================================
+   READING SUMMARY SECTION
+   ============================================================ */
+
+/* ── Section shell ── */
+.rs-section {
+  background: var(--c-bg);
+}
+
+.rs-sub {
+  padding: var(--sp-xl) 0;
+}
+
+.rs-divider {
+  border-top: 1px solid var(--c-border);
+  margin: 0 var(--sp-md);
+}
+
+/* ── Subsection titles ── */
+.rs-title {
+  font-family: var(--f-heading);
+  font-size: clamp(1.55rem, 3.5vw, 2.4rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  color: var(--c-text);
+  margin-bottom: var(--sp-lg);
+  max-width: 680px;
+}
+
+/* ══════════════════════════════════════════
+   SUBSECTION 1 — Concept flip boxes
+   ══════════════════════════════════════════ */
+.rs-concept-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  background: var(--c-border);
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+/* Each cell */
+.rs-concept-box {
+  position: relative;
+  min-height: 180px;
+  cursor: pointer;
+  background: #1A1A1A;
+  /* 3-D flip container */
+  perspective: 900px;
+}
+
+/* Inner wrapper — flips on click */
+.rs-concept-box__inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 180px;
+  transform-style: preserve-3d;
+  transition: transform 0.55s cubic-bezier(0.4, 0.2, 0.2, 1);
+}
+
+.rs-concept-box.flipped .rs-concept-box__inner {
+  transform: rotateY(180deg);
+}
+
+/* Front & back shared */
+.rs-concept-box__front,
+.rs-concept-box__back {
+  position: absolute;
+  inset: 0;
+  padding: var(--sp-md);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+/* Front face */
+.rs-concept-box__front {
+  background: #1A1A1A;
+}
+
+.rs-concept-box__front-title {
+  font-family: var(--f-heading);
+  font-size: clamp(1.3rem, 2.8vw, 2rem);
+  font-weight: 700;
+  color: #F7F6F2;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.rs-concept-box__front-hint {
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--c-accent-mid);
+  margin-top: 0.5rem;
+}
+
+/* Back face */
+.rs-concept-box__back {
+  background: var(--c-accent);
+  transform: rotateY(180deg);
+  justify-content: center;
+}
+
+.rs-concept-box__back-text {
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: rgba(247,246,242,0.92);
+  font-weight: 400;
+}
+
+/* ══════════════════════════════════════════
+   SUBSECTION 2 — Case study split
+   ══════════════════════════════════════════ */
+.rs-split {
+  display: flex;
+  gap: 0;
+  align-items: stretch;
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.rs-split__col {
+  flex: 1;
+  padding: var(--sp-lg) var(--sp-md);
+}
+
+.rs-split__col--left  { background: #F7F6F2; }
+.rs-split__col--right { background: var(--c-bg-alt); }
+
+.rs-split__divider {
+  width: 1px;
+  background: var(--c-border);
+  flex-shrink: 0;
+}
+
+.rs-split__heading {
+  font-family: var(--f-heading);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--c-text);
+  margin-bottom: 0.4rem;
+  letter-spacing: -0.01em;
+}
+
+.rs-split__place {
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--c-accent);
+  margin-bottom: var(--sp-md);
+}
+
+.rs-split__place em { font-style: normal; color: var(--c-text-sec); }
+
+.rs-bullet-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.rs-bullet-list li {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+  font-size: 0.9rem;
+  line-height: 1.65;
+  color: var(--c-text-sec);
+}
+
+.rs-bullet-list li::before {
+  content: '';
+  display: block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--c-accent);
+  margin-top: 0.55em;
+  flex-shrink: 0;
+}
+
+/* ══════════════════════════════════════════
+   SUBSECTION 3 — Radial / spoke diagram
+   ══════════════════════════════════════════ */
+.rs-diagram-wrap {
+  display: flex;
+  justify-content: center;
+}
+
+/* Desktop spoke layout */
+.rs-diagram {
+  position: relative;
+  width: min(680px, 100%);
+  aspect-ratio: 1 / 1;
+  margin: 0 auto;
+}
+
+/* Centre node */
+.rs-diagram__centre {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 156px;
+  height: 156px;
+  border-radius: 50%;
+  background: var(--c-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  z-index: 2;
+  padding: 1rem;
+}
+
+.rs-diagram__centre span {
+  font-family: var(--f-heading);
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #F7F6F2;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+
+/* SVG spoke lines — drawn by JS */
+.rs-diagram__svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.rs-diagram__svg line {
+  stroke: var(--c-border);
+  stroke-width: 1.5;
+}
+
+/* Each spoke node */
+.rs-spoke-node {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+  text-align: center;
+  width: 120px;
+}
+
+.rs-spoke-node__btn {
+  background: #1A1A1A;
+  border: none;
+  border-radius: var(--radius-md);
+  padding: 0.6rem 0.75rem;
+  cursor: pointer;
+  width: 100%;
+  transition: background var(--trans), transform var(--trans);
+}
+
+.rs-spoke-node__btn:hover {
+  background: #2a2a2a;
+  transform: scale(1.04);
+}
+
+.rs-spoke-node__btn.active {
+  background: var(--c-accent);
+}
+
+.rs-spoke-node__label {
+  font-family: var(--f-body);
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #F7F6F2;
+  line-height: 1.3;
+  display: block;
+}
+
+/* Reveal panel — appears below diagram */
+.rs-spoke-reveal {
+  margin-top: var(--sp-md);
+  max-width: 560px;
+  margin-left: auto;
+  margin-right: auto;
+  min-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, opacity 0.4s ease;
+  max-height: 0;
+  opacity: 0;
+}
+
+.rs-spoke-reveal.visible {
+  max-height: 200px;
+  opacity: 1;
+}
+
+.rs-spoke-reveal__inner {
+  background: var(--c-bg-alt);
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius-md);
+  padding: var(--sp-sm) var(--sp-md);
+}
+
+.rs-spoke-reveal__name {
+  font-family: var(--f-heading);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--c-accent);
+  margin-bottom: 0.4rem;
+}
+
+.rs-spoke-reveal__text {
+  font-size: 0.88rem;
+  line-height: 1.7;
+  color: var(--c-text-sec);
+}
+
+/* Mobile fallback — visible below ~640px */
+.rs-diagram-mobile {
+  display: none;
+  flex-direction: column;
+  gap: 0.6rem;
+  width: 100%;
+}
+
+.rs-diagram-mobile li button {
+  width: 100%;
+  text-align: left;
+  background: #1A1A1A;
+  border: none;
+  border-radius: var(--radius-md);
+  padding: 0.85rem var(--sp-sm);
+  cursor: pointer;
+  transition: background var(--trans);
+}
+
+.rs-diagram-mobile li button:hover,
+.rs-diagram-mobile li button.active { background: var(--c-accent); }
+
+.rs-diagram-mobile li button span {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #F7F6F2;
+  font-family: var(--f-body);
+}
+
+.rs-diagram-mobile__reveal {
+  display: none;
+  padding: 0.75rem var(--sp-sm);
+  background: var(--c-bg-alt);
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius-md);
+  font-size: 0.88rem;
+  line-height: 1.7;
+  color: var(--c-text-sec);
+  margin-top: 0.3rem;
+}
+
+.rs-diagram-mobile__reveal.visible { display: block; }
+
+/* ── Responsive ── */
+@media (max-width: 639px) {
+  .rs-concept-grid { grid-template-columns: 1fr; }
+
+  .rs-split {
+    flex-direction: column;
+  }
+  .rs-split__divider {
+    width: 100%;
+    height: 1px;
+  }
+
+  /* Hide SVG diagram, show mobile list */
+  .rs-diagram         { display: none; }
+  .rs-spoke-reveal    { display: none; }
+  .rs-diagram-mobile  { display: flex; }
+}
+
+@media (min-width: 640px) and (max-width: 1023px) {
+  .rs-concept-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (min-width: 1024px) {
+  .rs-concept-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* ============================================================
    FOOTER
    ============================================================ */
 .site-footer {
