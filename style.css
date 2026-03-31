@@ -311,6 +311,17 @@ ul  { list-style: none; }
   margin-top: var(--sp-md);
 }
 
+.hero-figures {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  height: 42%;
+  width: auto;
+  z-index: 2;
+  pointer-events: none;
+  display: block;
+}
+
 /* Scroll hint */
 .hero-scroll-hint {
   position: absolute;
