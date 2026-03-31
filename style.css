@@ -1672,14 +1672,10 @@ ul  { list-style: none; }
 /* ============================================================
    FOOTER
    ============================================================ */
-.site-footer {
-  background: var(--c-text);
-  color: rgba(247,246,242,0.4);
-  text-align: center;
-  padding: var(--sp-md) 0;
-  font-size: 0.78rem;
-  letter-spacing: 0.04em;
-  font-family: var(--f-body);
+.page-end-line {
+  border: none;
+  border-top: 1px solid #2F5D50;
+  margin: var(--sp-xl) 0 0;
 }
 
 /* ============================================================
