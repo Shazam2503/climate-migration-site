@@ -67,6 +67,32 @@
     </div>
   </section>
 
+  <!-- ========== WORD CLOUD ========== -->
+  <section class="wc-section" id="wordcloud">
+
+    <!-- Fog layers — animated away on click -->
+    <div class="wc-fog" id="wc-fog" aria-hidden="true">
+      <div class="wc-fog__layer wc-fog__layer--1"></div>
+      <div class="wc-fog__layer wc-fog__layer--2"></div>
+      <div class="wc-fog__layer wc-fog__layer--3"></div>
+      <div class="wc-fog__layer wc-fog__layer--4"></div>
+      <div class="wc-fog__layer wc-fog__layer--5"></div>
+      <div class="wc-fog__layer wc-fog__layer--6"></div>
+
+      <!-- Trigger text sits on top of the fog -->
+      <button class="wc-trigger" id="wc-trigger" aria-label="Click to reveal word cloud">
+        Word Cloud
+        <span class="wc-trigger__hint">click to reveal</span>
+      </button>
+    </div>
+
+    <!-- The word cloud — revealed after fog dissolves -->
+    <div class="wc-cloud" id="wc-cloud" aria-label="Climate migration word cloud">
+      <!-- Injected by script.js -->
+    </div>
+
+  </section>
+
   <hr class="section-divider" />
 
   <!-- ========== ABOUT ========== -->
