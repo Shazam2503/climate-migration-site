@@ -8,53 +8,42 @@
    WORD CLOUD
    ============================================================ */
 
-/* Word list — { text, size (1–5), colour ('dark'|'green'|'grey') } */
 const cloudWords = [
-  /* Size 5 — biggest, most important */
-  { text: 'Climate Refugees',    size: 5, colour: 'dark'  },
-  { text: 'Forced Migration',    size: 5, colour: 'green' },
-  { text: 'Displacement',        size: 5, colour: 'dark'  },
-  { text: 'Crisis',              size: 5, colour: 'green' },
-
-  /* Size 4 */
-  { text: 'Climate',             size: 4, colour: 'dark'  },
-  { text: 'Flooding',            size: 4, colour: 'green' },
-  { text: 'Drought',             size: 4, colour: 'dark'  },
-  { text: 'Human Rights',        size: 4, colour: 'grey'  },
-  { text: 'Vulnerability',       size: 4, colour: 'green' },
-  { text: 'Sustainability',      size: 4, colour: 'dark'  },
-  { text: 'Refugees',            size: 4, colour: 'grey'  },
-  { text: 'Adaptation',          size: 4, colour: 'green' },
-
-  /* Size 3 */
-  { text: 'Relocation',          size: 3, colour: 'dark'  },
-  { text: 'Environmental Justice',size:3, colour: 'green' },
-  { text: 'Human Mobility',      size: 3, colour: 'grey'  },
-  { text: 'Rising Seas',         size: 3, colour: 'dark'  },
-  { text: 'Migration Flow',      size: 3, colour: 'green' },
-  { text: 'Policy',              size: 3, colour: 'dark'  },
-  { text: 'Shelter',             size: 3, colour: 'grey'  },
-  { text: 'Resettlement',        size: 3, colour: 'green' },
-
-  /* Size 2 */
-  { text: 'Coastal Erosion',     size: 2, colour: 'grey'  },
-  { text: 'Wildfires',           size: 2, colour: 'dark'  },
-  { text: 'Host Country',        size: 2, colour: 'green' },
-  { text: 'Border',              size: 2, colour: 'grey'  },
-  { text: 'Legal Status',        size: 2, colour: 'dark'  },
-  { text: 'Food Security',       size: 2, colour: 'green' },
-  { text: 'Resource Stress',     size: 2, colour: 'grey'  },
-
-  /* Size 1 — smallest */
-  { text: 'Loss of Habitat',     size: 1, colour: 'grey'  },
-  { text: 'Climate Security',    size: 1, colour: 'dark'  },
-  { text: 'Migration Patterns',  size: 1, colour: 'green' },
-  { text: 'Socioeconomic',       size: 1, colour: 'grey'  },
-  { text: 'Community Planning',  size: 1, colour: 'dark'  },
-  { text: 'Humanitarian',        size: 1, colour: 'green' },
+  { text: 'Climate Refugees',     size: 5, colour: 'dark'  },
+  { text: 'Forced Migration',     size: 5, colour: 'green' },
+  { text: 'Displacement',         size: 5, colour: 'dark'  },
+  { text: 'Crisis',               size: 5, colour: 'green' },
+  { text: 'Climate',              size: 4, colour: 'dark'  },
+  { text: 'Flooding',             size: 4, colour: 'green' },
+  { text: 'Drought',              size: 4, colour: 'dark'  },
+  { text: 'Human Rights',         size: 4, colour: 'grey'  },
+  { text: 'Vulnerability',        size: 4, colour: 'green' },
+  { text: 'Sustainability',       size: 4, colour: 'dark'  },
+  { text: 'Refugees',             size: 4, colour: 'grey'  },
+  { text: 'Adaptation',           size: 4, colour: 'green' },
+  { text: 'Relocation',           size: 3, colour: 'dark'  },
+  { text: 'Environmental Justice', size: 3, colour: 'green' },
+  { text: 'Human Mobility',       size: 3, colour: 'grey'  },
+  { text: 'Rising Seas',          size: 3, colour: 'dark'  },
+  { text: 'Migration Flow',       size: 3, colour: 'green' },
+  { text: 'Policy',               size: 3, colour: 'dark'  },
+  { text: 'Shelter',              size: 3, colour: 'grey'  },
+  { text: 'Resettlement',         size: 3, colour: 'green' },
+  { text: 'Coastal Erosion',      size: 2, colour: 'grey'  },
+  { text: 'Wildfires',            size: 2, colour: 'dark'  },
+  { text: 'Host Country',         size: 2, colour: 'green' },
+  { text: 'Border',               size: 2, colour: 'grey'  },
+  { text: 'Legal Status',         size: 2, colour: 'dark'  },
+  { text: 'Food Security',        size: 2, colour: 'green' },
+  { text: 'Resource Stress',      size: 2, colour: 'grey'  },
+  { text: 'Loss of Habitat',      size: 1, colour: 'grey'  },
+  { text: 'Climate Security',     size: 1, colour: 'dark'  },
+  { text: 'Migration Patterns',   size: 1, colour: 'green' },
+  { text: 'Socioeconomic',        size: 1, colour: 'grey'  },
+  { text: 'Community Planning',   size: 1, colour: 'dark'  },
+  { text: 'Humanitarian',         size: 1, colour: 'green' },
 ];
 
-/* Shuffle so layout feels organic, not alphabetical */
 function shuffle(arr) {
   const a = [...arr];
   for (let i = a.length - 1; i > 0; i--) {
@@ -65,22 +54,10 @@ function shuffle(arr) {
 }
 
 const wcCloud   = document.getElementById('wc-cloud');
-const wcFog     = document.getElementById('wc-fog');
-const wcTrigger = document.getElementById('wc-trigger');
+const wcOverlay = document.getElementById('wc-overlay');
+const wcHint    = document.getElementById('wc-hint');
 
-/* Render words */
 if (wcCloud) {
-  /* Wrap trigger text in a span for styling */
-  if (wcTrigger) {
-    const label = wcTrigger.childNodes[0];
-    if (label && label.nodeType === Node.TEXT_NODE) {
-      const span = document.createElement('span');
-      span.className = 'wc-trigger-text-inner';
-      span.textContent = label.textContent.trim();
-      wcTrigger.replaceChild(span, label);
-    }
-  }
-
   shuffle(cloudWords).forEach(word => {
     const span = document.createElement('span');
     span.className = `wc-word wc-word--${word.size} wc-word--${word.colour}`;
@@ -89,21 +66,11 @@ if (wcCloud) {
   });
 }
 
-/* Dissolve on click */
-if (wcFog && wcCloud) {
-  wcFog.addEventListener('click', () => {
-    if (wcFog.classList.contains('dissolving')) return;
-    wcFog.classList.add('dissolving');
-    wcCloud.classList.add('revealed');
-
-    /* Remove fog from DOM after animation finishes */
-    wcFog.addEventListener('animationend', () => {
-      /* Wait for the slowest layer (1.5s + 0.2s delay = 1.7s) */
-    }, { once: true });
-
-    setTimeout(() => {
-      wcFog.classList.add('gone');
-    }, 1800);
+if (wcOverlay) {
+  wcOverlay.addEventListener('click', () => {
+    wcOverlay.classList.add('revealed');
+    if (wcHint) wcHint.style.opacity = '0';
+    setTimeout(() => { wcOverlay.style.display = 'none'; }, 1700);
   });
 }
 
