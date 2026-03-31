@@ -1714,6 +1714,7 @@ ul  { list-style: none; }
   .nav-toggle { display: flex !important; }
 
   .nav-links {
+    display: none;
     position: fixed;
     top: var(--nav-h);
     left: 0; right: 0;
@@ -1722,14 +1723,12 @@ ul  { list-style: none; }
     flex-direction: column;
     gap: 0;
     padding: var(--sp-xs) 0;
-    transform: translateY(-110%);
-    transition: transform var(--trans);
     z-index: 999;
     border-bottom: 1px solid var(--c-border);
     box-shadow: var(--shadow-md);
   }
 
-  .nav-links.open { transform: translateY(0); }
+  .nav-links.open { display: flex; }
 
   .nav-links li { width: 100%; }
 
