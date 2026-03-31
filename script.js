@@ -286,6 +286,87 @@ if (rsDiagramMobile) {
 }
 
 /* ============================================================
+   NEWS ARTICLE SECTION — Tuvalu pathway cards
+   ============================================================ */
+const naCards = [
+  {
+    icon:  '🏝️',
+    title: 'Tuvalu',
+    text:  'Tuvalu is a small Pacific Island state of 9 low-lying atolls, with a population of around 11,000. With an average elevation of under 2 metres, it is highly vulnerable to rising sea levels. For Tuvaluans, land is not just physical territory but central to identity, culture, and spiritual life.'
+  },
+  {
+    icon:  '🌊',
+    title: 'Climate Threat',
+    text:  'Rising seas, coastal erosion, and intensifying storms are already reshaping the islands. Saltwater intrusion is damaging crops and freshwater sources, undermining everyday life. Projections suggest large parts of Tuvalu may become uninhabitable within decades.'
+  },
+  {
+    icon:  '🁢',
+    title: 'Climate Domino Effect',
+    text:  'Environmental change triggers a cascade of impacts, from loss of land to loss of livelihoods and increasing uncertainty. Climate change therefore operates as a chain reaction that gradually pushes communities towards displacement.',
+    iconSvg: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="4" width="4" height="16" rx="1" fill="#2F5D50"/><rect x="10" y="8" width="4" height="12" rx="1" fill="#3d7a68"/><rect x="17" y="12" width="4" height="8" rx="1" fill="#8a9a95"/></svg>`
+  },
+  {
+    icon:  '🛂',
+    title: 'Australia–Tuvalu Visa Pathway',
+    text:  'Australia has introduced a migration pathway allowing up to 280 Tuvaluans per year to relocate. The scheme is framed as enabling "mobility with dignity," offering a planned form of relocation rather than sudden displacement.'
+  },
+  {
+    icon:  '👥',
+    title: 'Lived Realities of Relocation',
+    text:  'Relocation extends beyond physical movement. Among those selected are individuals such as a pastor whose role is to help maintain spiritual and cultural ties even after leaving the homeland. This reflects how displacement involves the ongoing effort to preserve identity in unfamiliar environments.'
+  },
+  {
+    icon:  '👥',
+    title: 'Demand and Limitations',
+    text:  'More than 3,000 people applied in the initial intake — nearly one third of the population. With only 280 visas available each year and selection determined by lottery, many remain without access to relocation.'
+  },
+  {
+    icon:  '🛂',
+    title: 'Framing and Recognition Gap',
+    text:  'While the scheme responds directly to environmental vulnerability, the term "climate change" is not explicitly used in official documentation. This reflects a broader issue: people displaced by climate change are not formally recognised as refugees under international law.'
+  },
+  {
+    icon:  '🁢',
+    title: 'Broader Implication',
+    text:  'This creates a contradiction where people are forced to leave their homes due to environmental change, yet remain legally unrecognised as "climate refugees." Displacement involves not only physical loss of place, but also a lack of formal recognition of that loss.',
+    iconSvg: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="4" width="4" height="16" rx="1" fill="#2F5D50"/><rect x="10" y="8" width="4" height="12" rx="1" fill="#3d7a68"/><rect x="17" y="12" width="4" height="8" rx="1" fill="#8a9a95"/></svg>`
+  },
+];
+
+const naPathway = document.getElementById('na-pathway');
+if (naPathway) {
+  const arrowSVG = `<svg viewBox="0 0 28 28" fill="none" aria-hidden="true">
+    <path d="M6 14h16M16 8l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>`;
+
+  naCards.forEach((card, i) => {
+    /* Card element */
+    const el = document.createElement('div');
+    el.className = 'na-card';
+
+    const iconHTML = card.iconSvg
+      ? `<div class="na-card__icon">${card.iconSvg}</div>`
+      : `<div class="na-card__icon">${card.icon}</div>`;
+
+    el.innerHTML = `
+      <p class="na-card__num">${String(i + 1).padStart(2, '0')}</p>
+      ${iconHTML}
+      <h3 class="na-card__title">${card.title}</h3>
+      <p  class="na-card__text">${card.text}</p>`;
+
+    naPathway.appendChild(el);
+
+    /* Arrow between cards (not after last) */
+    if (i < naCards.length - 1) {
+      const arrow = document.createElement('div');
+      arrow.className = 'na-arrow';
+      arrow.innerHTML = arrowSVG;
+      naPathway.appendChild(arrow);
+    }
+  });
+}
+
+/* ============================================================
    CAUSE CARDS — Root causes of climate displacement
    Add/edit entries here. Fields:
      icon    — emoji or symbol
