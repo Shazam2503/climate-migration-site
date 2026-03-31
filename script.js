@@ -321,7 +321,7 @@ const naCards = [
     text:  'More than 3,000 people applied in the initial intake — nearly one third of the population. With only 280 visas available each year and selection determined by lottery, many remain without access to relocation.'
   },
   {
-    icon:  '🛂',
+    icon:  '📝',
     title: 'Framing and Recognition Gap',
     text:  'While the scheme responds directly to environmental vulnerability, the term "climate change" is not explicitly used in official documentation. This reflects a broader issue: people displaced by climate change are not formally recognised as refugees under international law.'
   },
@@ -329,7 +329,8 @@ const naCards = [
     icon:  '🁢',
     title: 'Broader Implication',
     text:  'This creates a contradiction where people are forced to leave their homes due to environmental change, yet remain legally unrecognised as "climate refugees." Displacement involves not only physical loss of place, but also a lack of formal recognition of that loss.',
-    iconSvg: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="4" width="4" height="16" rx="1" fill="#2F5D50"/><rect x="10" y="8" width="4" height="12" rx="1" fill="#3d7a68"/><rect x="17" y="12" width="4" height="8" rx="1" fill="#8a9a95"/></svg>`
+    icon: '🌍',
+    iconSvg: null
   },
 ];
 
