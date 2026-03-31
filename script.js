@@ -368,6 +368,205 @@ if (naPathway) {
 }
 
 /* ============================================================
+   ACTIVITY — Spin the wheel
+   ============================================================ */
+
+const actSegmentData = [
+  {
+    text:      'Mobility with dignity',
+    color:     '#2F5D50',
+    textColor: '#F7F6F2',
+    statement: 'Mobility with dignity',
+    prompts:   ['Framing', 'Choice vs force', 'Loss'],
+  },
+  {
+    text:      'Climate migrants are not legally recognised as refugees',
+    color:     '#C47C3A',
+    textColor: '#F7F6F2',
+    statement: 'Climate migrants are not legally recognised as refugees',
+    prompts:   ['Legal gap', 'Protection', 'Recognition', 'Responsibility'],
+  },
+  {
+    text:      'Relocation as adaptation',
+    color:     '#4A6FA5',
+    textColor: '#F7F6F2',
+    statement: 'Relocation as adaptation',
+    prompts:   ['Inevitable', 'Managed', 'Alternatives', 'Power'],
+  },
+];
+
+/* ── Render prompt words ── */
+const actPrompts = document.getElementById('act-prompts');
+if (actPrompts) {
+  actSegmentData.forEach(seg => {
+    const group = document.createElement('div');
+    group.className = 'act-prompt-group';
+    group.innerHTML = `
+      <p class="act-prompt-statement">${seg.statement}</p>
+      <div class="act-prompt-words">
+        ${seg.prompts.map(p => `<span class="act-prompt-tag">${p}</span>`).join('')}
+      </div>`;
+    actPrompts.appendChild(group);
+  });
+}
+
+/* ── Canvas wheel ── */
+const actCanvas = document.getElementById('act-canvas');
+if (actCanvas) {
+  const ctx      = actCanvas.getContext('2d');
+  const SEG      = actSegmentData.length;
+  const ARC      = (2 * Math.PI) / SEG;
+
+  let rotation        = Math.random() * 2 * Math.PI; /* random start orientation */
+  let angularVelocity = 0;
+  let wheelState      = 'idle'; /* 'idle' | 'spinning' | 'stopping' */
+  let rafId           = null;
+
+  const STOP_FRICTION  = 0.976; /* deceleration factor per frame when stopping */
+  const STOP_THRESHOLD = 0.0006;
+
+  /* ── Wrapped text helper ── */
+  function drawWrappedText(context, text, x, y, maxWidth, lineHeight) {
+    const words = text.split(' ');
+    let line  = '';
+    const lines = [];
+    for (const word of words) {
+      const test = line + word + ' ';
+      if (context.measureText(test).width > maxWidth && line) {
+        lines.push(line.trimEnd());
+        line = word + ' ';
+      } else {
+        line = test;
+      }
+    }
+    if (line.trim()) lines.push(line.trimEnd());
+
+    const totalH = lines.length * lineHeight;
+    let curY = y - totalH / 2 + lineHeight * 0.5;
+    lines.forEach(l => { context.fillText(l, x, curY); curY += lineHeight; });
+  }
+
+  /* ── Draw the wheel ── */
+  function drawWheel() {
+    const W  = actCanvas.width;
+    const H  = actCanvas.height;
+    const cx = W / 2;
+    const cy = H / 2;
+    const R  = Math.min(cx, cy) - 14;
+
+    ctx.clearRect(0, 0, W, H);
+
+    /* Segments */
+    actSegmentData.forEach((seg, i) => {
+      const startAngle = rotation + i * ARC - Math.PI / 2;
+      const endAngle   = startAngle + ARC;
+      const midAngle   = startAngle + ARC / 2;
+
+      /* Fill segment */
+      ctx.beginPath();
+      ctx.moveTo(cx, cy);
+      ctx.arc(cx, cy, R, startAngle, endAngle);
+      ctx.closePath();
+      ctx.fillStyle = seg.color;
+      ctx.fill();
+
+      /* Segment border */
+      ctx.strokeStyle = '#fff';
+      ctx.lineWidth   = 3;
+      ctx.stroke();
+
+      /* Text — radial, from centre outward */
+      ctx.save();
+      ctx.translate(cx, cy);
+      ctx.rotate(midAngle);
+      ctx.translate(R * 0.52, 0);  /* move along radius */
+      ctx.rotate(Math.PI / 2);     /* rotate so text reads outward → inward arc */
+      ctx.textAlign    = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillStyle    = seg.textColor;
+      ctx.font         = 'bold 12px Inter, system-ui, sans-serif';
+
+      const maxTextW = R * 0.78;
+      drawWrappedText(ctx, seg.text, 0, 0, maxTextW, 16);
+      ctx.restore();
+    });
+
+    /* Outer ring */
+    ctx.beginPath();
+    ctx.arc(cx, cy, R, 0, 2 * Math.PI);
+    ctx.strokeStyle = '#fff';
+    ctx.lineWidth   = 3;
+    ctx.stroke();
+
+    /* Centre hub */
+    ctx.beginPath();
+    ctx.arc(cx, cy, 16, 0, 2 * Math.PI);
+    ctx.fillStyle   = '#fff';
+    ctx.fill();
+    ctx.strokeStyle = '#e0ddd5';
+    ctx.lineWidth   = 1.5;
+    ctx.stroke();
+
+    /* Needle — fixed at 12 o'clock, pointing downward */
+    const nx = cx;
+    const ny = cy - R - 2;
+    ctx.beginPath();
+    ctx.moveTo(nx - 11, ny - 20);
+    ctx.lineTo(nx + 11, ny - 20);
+    ctx.lineTo(nx,      ny + 4);
+    ctx.closePath();
+    ctx.fillStyle   = '#1A1A1A';
+    ctx.fill();
+    ctx.strokeStyle = '#fff';
+    ctx.lineWidth   = 1.5;
+    ctx.stroke();
+  }
+
+  /* ── Animation loop ── */
+  function animate() {
+    if (wheelState === 'spinning') {
+      rotation += angularVelocity;
+    } else if (wheelState === 'stopping') {
+      angularVelocity *= STOP_FRICTION;
+      rotation        += angularVelocity;
+      if (angularVelocity < STOP_THRESHOLD) {
+        angularVelocity = 0;
+        wheelState      = 'idle';
+        cancelAnimationFrame(rafId);
+        rafId = null;
+        drawWheel();
+        return;
+      }
+    }
+    drawWheel();
+    rafId = requestAnimationFrame(animate);
+  }
+
+  /* ── Button wiring ── */
+  const startBtn = document.getElementById('act-start');
+  const stopBtn  = document.getElementById('act-stop');
+
+  if (startBtn) {
+    startBtn.addEventListener('click', () => {
+      if (wheelState !== 'idle') return;
+      /* Random speed between ~1.8 and 3 rev/s at 60fps */
+      angularVelocity = 0.065 + Math.random() * 0.055;
+      wheelState = 'spinning';
+      if (!rafId) rafId = requestAnimationFrame(animate);
+    });
+  }
+
+  if (stopBtn) {
+    stopBtn.addEventListener('click', () => {
+      if (wheelState === 'spinning') wheelState = 'stopping';
+    });
+  }
+
+  /* Initial draw */
+  drawWheel();
+}
+
+/* ============================================================
    CAUSE CARDS — Root causes of climate displacement
    Add/edit entries here. Fields:
      icon    — emoji or symbol

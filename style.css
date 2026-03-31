@@ -1457,6 +1457,110 @@ ul  { list-style: none; }
 }
 
 /* ============================================================
+   ACTIVITY — Spin the wheel
+   ============================================================ */
+
+.act-section {
+  background: var(--c-bg);
+}
+
+/* Two-column layout: wheel left, prompts right */
+.act-layout {
+  display: flex;
+  gap: var(--sp-xl);
+  align-items: flex-start;
+  margin-top: var(--sp-lg);
+}
+
+/* ── Wheel column ── */
+.act-wheel-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-md);
+  flex-shrink: 0;
+}
+
+.act-wheel-wrap {
+  position: relative;
+}
+
+#act-canvas {
+  display: block;
+  width: 340px;
+  height: 340px;
+  max-width: 100%;
+}
+
+.act-buttons {
+  display: flex;
+  gap: var(--sp-sm);
+}
+
+/* ── Prompt words column ── */
+.act-prompts {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-md);
+  padding-top: 0.5rem;
+}
+
+.act-prompt-group {
+  padding: var(--sp-sm) var(--sp-md);
+  border-left: 3px solid var(--c-border);
+  transition: border-color var(--trans);
+}
+
+.act-prompt-group:nth-child(1) { border-color: #2F5D50; }
+.act-prompt-group:nth-child(2) { border-color: #C47C3A; }
+.act-prompt-group:nth-child(3) { border-color: #4A6FA5; }
+
+.act-prompt-statement {
+  font-family: var(--f-heading);
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--c-text);
+  margin-bottom: 0.5rem;
+  line-height: 1.3;
+}
+
+.act-prompt-words {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.act-prompt-tag {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  padding: 0.25em 0.7em;
+  border-radius: 100px;
+  background: var(--c-bg-alt);
+  color: var(--c-text-sec);
+  border: 1px solid var(--c-border);
+}
+
+/* ── Mobile: stack vertically ── */
+@media (max-width: 767px) {
+  .act-layout {
+    flex-direction: column;
+    align-items: center;
+    gap: var(--sp-lg);
+  }
+
+  .act-prompts {
+    width: 100%;
+  }
+
+  #act-canvas {
+    width: 300px;
+    height: 300px;
+  }
+}
+
+/* ============================================================
    FOOTER
    ============================================================ */
 .site-footer {

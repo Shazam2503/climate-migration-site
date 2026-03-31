@@ -181,6 +181,35 @@
     </div>
   </section>
 
+  <!-- ========== ACTIVITY SECTION ========== -->
+  <section class="act-section" id="activity">
+    <div class="container">
+      <span class="section-label">Interactive</span>
+      <h2 class="section-title">Activity</h2>
+
+      <div class="act-layout">
+
+        <!-- Wheel + buttons -->
+        <div class="act-wheel-col">
+          <div class="act-wheel-wrap">
+            <canvas id="act-canvas" width="380" height="380"
+                    aria-label="Spin wheel with three segments"></canvas>
+          </div>
+          <div class="act-buttons">
+            <button class="btn btn-primary"      id="act-start">Start</button>
+            <button class="btn btn-outline-dark" id="act-stop">Stop</button>
+          </div>
+        </div>
+
+        <!-- Always-visible prompt words -->
+        <div class="act-prompts" id="act-prompts">
+          <!-- Injected by script.js -->
+        </div>
+
+      </div>
+    </div>
+  </section>
+
   <hr class="section-divider" />
 
   <!-- ========== ABOUT ========== -->
